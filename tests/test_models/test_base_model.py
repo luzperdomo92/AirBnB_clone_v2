@@ -1,16 +1,46 @@
 #!/usr/bin/python3
+""" Unittest Amenity class """
 
-""" """
 from models.base_model import BaseModel
 import unittest
 import datetime
 from uuid import UUID
 import json
 import os
+import io
+import pep8
+from console import HBNBCommand
+from unittest.mock import patch
 
 
 class test_basemodel(unittest.TestCase):
-    """ """
+    """ Test for BaseModel class """
+
+    def test_doc_module(self):
+        """Module documentation"""
+        doc = BaseModel.__doc__
+        self.assertGreater(len(doc), 1)
+
+    def test_pep8_conformance_base_model(self):
+        """Test that models/base_model.py conforms to PEP8."""
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(['models/base_model.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
+
+    def test_pep8_conformance_test_base_model(self):
+        """Test that tests/test_models/test_base_model.py conforms to PEP8."""
+        pep8style = pep8.StyleGuide(quiet=True)
+        res = pep8style.check_files(['tests/test_models/test_base_model.py'])
+        self.assertEqual(res.total_errors, 0,
+                         "Found code style errors (and warnings).")
+
+    def test_doc_constructor(self):
+        """Constructor documentation"""
+        doc = BaseModel.__init__.__doc__
+        self.assertGreater(len(doc), 1)
+
+    """ added test ends here """
 
     def __init__(self, *args, **kwargs):
         """ """
@@ -21,12 +51,6 @@ class test_basemodel(unittest.TestCase):
     def setUp(self):
         """ """
         pass
-
-    def tearDown(self):
-        try:
-            os.remove('file.json')
-        except:
-            pass
 
     def test_default(self):
         """ """
@@ -61,7 +85,7 @@ class test_basemodel(unittest.TestCase):
         """ """
         i = self.value()
         self.assertEqual(str(i), '[{}] ({}) {}'.format(self.name, i.id,
-                         i.__dict__))
+                                                       i.__dict__))
 
     def test_todict(self):
         """ """
@@ -75,11 +99,18 @@ class test_basemodel(unittest.TestCase):
         with self.assertRaises(TypeError):
             new = self.value(**n)
 
+    @ unittest.skip("new future added")
     def test_kwargs_one(self):
         """ """
         n = {'Name': 'test'}
         with self.assertRaises(KeyError):
             new = self.value(**n)
+
+    def test_kwargs_object(self):
+        """ """
+        n = {'Name': 'test'}
+        new_obj = self.value(**n)
+        self.assertEqual(new_obj.__dict__['Name'], 'test')
 
     def test_id(self):
         """ """
@@ -98,3 +129,7 @@ class test_basemodel(unittest.TestCase):
         n = new.to_dict()
         new = BaseModel(**n)
         self.assertFalse(new.created_at == new.updated_at)
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,20 +1,40 @@
 #!/usr/bin/python3
+""" Unittest Amenity class """
+import unittest
+import json
+import pep8
+import datetime
 
-""" """
-from tests.test_models.test_base_model import test_basemodel
 from models.amenity import Amenity
+from models.base_model import BaseModel
 
 
-class test_Amenity(test_basemodel):
-    """ """
+class TestAmenity(unittest.TestCase):
+    """Test State class implementation"""
+    def test_doc_module(self):
+        """Module documentation"""
+        doc = Amenity.__doc__
+        self.assertGreater(len(doc), 1)
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "Amenity"
-        self.value = Amenity
+    def test_pep8_conformance_amenity(self):
+        """Test that models/amenity.py conforms to PEP8."""
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(['models/amenity.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
-    def test_name2(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.name), str)
+    def test_pep8_conformance_test_amenity(self):
+        """Test that tests/test_models/test_state.py conforms to PEP8."""
+        pep8style = pep8.StyleGuide(quiet=True)
+        res = pep8style.check_files(['tests/test_models/test_amenity.py'])
+        self.assertEqual(res.total_errors, 0,
+                         "Found code style errors (and warnings).")
+
+    def test_doc_constructor(self):
+        """Constructor documentation"""
+        doc = Amenity.__init__.__doc__
+        self.assertGreater(len(doc), 1)
+
+
+if __name__ == '__main__':
+    unittest.main()
