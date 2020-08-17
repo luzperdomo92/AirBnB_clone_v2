@@ -12,7 +12,7 @@ mkdir -p /data/web_static/releases/test/
 
 # fake html file with simple content
 touch /data/web_static/releases/test/index.html
-printf "<html>
+echo "<html>
   <head>
   </head>
   <body>
