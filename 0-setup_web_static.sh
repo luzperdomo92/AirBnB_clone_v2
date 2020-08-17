@@ -17,11 +17,10 @@ printf "<html>
   <body>
     Holberton School
   </body>
-</html>
-" > /data/web_static/releases/test/index.html
+</html>" > /data/web_static/releases/test/index.html
 
 # Symbolic link
-ln -sf /data/web_static/releases/test/ /data/web_static/current
+ln -sfn /data/web_static/releases/test/ /data/web_static/current
 
 # give ownership persissions to ubuntu
 chown -R ubuntu:ubuntu /data/
