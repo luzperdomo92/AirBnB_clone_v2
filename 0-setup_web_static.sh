@@ -9,9 +9,6 @@ apt-get -y install nginx
 mkdir -p /data/web_static/shared/
 mkdir -p /data/web_static/releases/test/
 
-# give ownership persissions to ubuntu
-chown -R ubuntu:ubuntu /data/
-
 # fake html file with simple content
 touch /data/web_static/releases/test/index.html
 printf "<html>
@@ -25,6 +22,9 @@ printf "<html>
 
 # Symbolic link
 ln -sf /data/web_static/releases/test/ /data/web_static/current
+
+# give ownership persissions to ubuntu
+chown -R ubuntu:ubuntu /data/
 
 # Update the Nginx configuration to serve the content
 sed -i '/root \/var\/www\/html;/a location /hbnb_static { alias /data/web_static/current/; }' /etc/nginx/sites-available/default
