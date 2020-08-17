@@ -2,32 +2,31 @@
 # configure the web servers for deployment
 
 # update and install Nginx
-apt-get -y update
-apt-get -y install nginx
+sudo apt-get -y update
+sudo apt-get -y install nginx
 sudo ufw allow 'Nginx HTTP'
 
 # Create the folders
-mkdir -p /data/web_static/shared/
-mkdir -p /data/web_static/releases/test/
+sudo mkdir -p /data/web_static/shared/
+sudo mkdir -p /data/web_static/releases/test/
 
 # fake html file with simple content
-touch /data/web_static/releases/test/index.html
-echo "<html>
+sudo touch /data/web_static/releases/test/index.html
+sudo echo "<html>
   <head>
   </head>
   <body>
     Holberton School
   </body>
-</html>
-" > /data/web_static/releases/test/index.html
+</html>" > /data/web_static/releases/test/index.html
 
 # Symbolic link
-ln -sfn /data/web_static/releases/test/ /data/web_static/current
+sudo ln -sfn /data/web_static/releases/test/ /data/web_static/current
 
 # give ownership persissions to ubuntu
-chown -R ubuntu:ubuntu /data/
+sudo chown -R ubuntu:ubuntu /data/
 
 # Update the Nginx configuration to serve the content
-sed -i "/server_name _;/a location /hbnb_static { alias /data/web_static/current/; autoindex off; }" /etc/nginx/sites-available/default
+sudo sed -i "47i location /hbnb_static { alias /data/web_static/current/; autoindex off; }" /etc/nginx/sites-available/default
 
-service nginx restart
+sudo service nginx restart
