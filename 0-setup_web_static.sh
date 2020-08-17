@@ -4,6 +4,7 @@
 # update and install Nginx
 apt-get -y update
 apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
 
 # Create the folders
 mkdir -p /data/web_static/shared/
@@ -17,7 +18,8 @@ printf "<html>
   <body>
     Holberton School
   </body>
-</html>" > /data/web_static/releases/test/index.html
+</html>
+" > /data/web_static/releases/test/index.html
 
 # Symbolic link
 ln -sfn /data/web_static/releases/test/ /data/web_static/current
