@@ -35,23 +35,20 @@ def do_deploy(archive_path):
         return False
 
     # web_static_20170315003959.tgz
-    file_name = os.path.basename(archive_path)
+    file_name = archive_path.split("/")[-1]
     # web_static_20170315003959
-    file_name_wo_ext = os.path.splitext(file_name)[0]
+    file_name_wo_ext = file_name.split(".")[0]
+    release_path = "/data/web_static/releases/%s" %(file_name_wo_ext)
 
     try:
         put(archive_path, '/tmp/%s' % (file_name))
-        run("mkdir -p /data/web_static/releases/%s" % (file_name_wo_ext))
-        run("tar -xzf /tmp/%s -C /data/web_static/releases/%s/" % (
-            file_name, file_name_wo_ext))
+        run("mkdir -p %s" % (release_path))
+        run("tar -xzf /tmp/%s -C %s/" % (file_name, release_path))
         run("rm /tmp/%s" % (file_name))
-        run("mv /data/web_static/releases/%s/web_static/* "\
-            "/data/web_static/releases/%s/" % (file_name_wo_ext, file_name_wo_ext))
-        run("rm -rf /data/web_static/releases/%s/web_static" % (
-            file_name_wo_ext))
+        run("mv %s/web_static/* %s/" % (release_path, release_path))
+        run("rm -rf %s/web_static" % (release_path))
         run("rm -rf /data/web_static/current")
-        run("ln -s /data/web_static/releases/%s/ "\
-            "/data/web_static/current" % (file_name_wo_ext))
+        run("ln -s %s /data/web_static/current" % (release_path))
         return True
     except:
         return False
