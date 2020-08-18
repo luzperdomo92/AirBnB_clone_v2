@@ -18,4 +18,4 @@ def do_pack():
     result = local("tar -cvzf %s %s" % (file_path, folder_name))
     if result.failed:
         return None
-    return file_path
+    return file_name
