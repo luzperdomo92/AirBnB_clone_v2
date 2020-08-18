@@ -38,27 +38,26 @@ def do_deploy(archive_path):
     # web_static_20170315003959
     file_name_wo_ext = os.path.splitext(file_name)[0]
 
-    rs = put(archive_path, '/tmp/%s'.format(file_name))
+    rs = put(archive_path, '/tmp/%s' % (file_name))
     if rs.failed:
         return False
-    rs = run("mkdir -p /data/web_static/releases/%s".format(file_name_wo_ext))
+    rs = run("mkdir -p /data/web_static/releases/%s" % (file_name_wo_ext))
     if rs.failed:
         return False
 
-    rs = run("tar -xzf /tmp/%s -C /data/web_static/releases/%s/".format(
+    rs = run("tar -xzf /tmp/%s -C /data/web_static/releases/%s/" % (
         file_name, file_name_wo_ext))
     if rs.failed:
         return False
 
-    rs = run("rm /tmp/%s".format(file_name))
+    rs = run("rm /tmp/%s" % (file_name))
     if rs.failed:
         return False
     rs = run("mv /data/web_static/releases/%s/web_static/* \
-        /data/web_static/releases/%s/".format(file_name_wo_ext,
-                                              file_name_wo_ext))
+        /data/web_static/releases/%s/" % (file_name_wo_ext, file_name_wo_ext))
     if rs.failed:
         return False
-    rs = run("rm -rf /data/web_static/releases/%s/web_static".format(
+    rs = run("rm -rf /data/web_static/releases/%s/web_static" % (
         file_name_wo_ext))
     if rs.failed:
         return False
@@ -67,7 +66,7 @@ def do_deploy(archive_path):
     if rs.failed:
         return False
     rs = run("ln -s /data/web_static/releases/%s/ \
-             /data/web_static/current".format(file_name_wo_ext))
+             /data/web_static/current" % (file_name_wo_ext))
     if rs.failed:
         return False
 
