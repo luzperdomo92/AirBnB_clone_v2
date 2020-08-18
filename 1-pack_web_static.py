@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from fabric.api import run
+from fabric.api import run, local
 from datetime import date
 
 
@@ -9,6 +9,8 @@ def do_pack():
     folder_name = "web_static"
     today = date.today()
     today_str = today.strftime("%Y%m%d%l%M%S")
-    run("mkdir versions")
-    run("tar -cvzf versions/%s_%s.tgz %s" % (folder_name, today_str,
-                                             folder_name))
+    file_name = "%s_%s.tgz" % (folder_name, today_str)
+
+    local("mkdir -p versions")
+    local("tar -cvzf versions/%s %s" % (file_name, folder_name))
+    return file_name
