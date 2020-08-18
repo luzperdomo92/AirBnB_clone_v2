@@ -15,7 +15,7 @@ def do_pack():
     result = local("mkdir -p versions")
     if result.failed:
         return None
-    result = local("tar -cvzf %s %s" % (archive_path, folder_name))
+    result = local("tar -cvzf %s %s" % (file_path, folder_name))
     if result.failed:
         return None
     return file_path
