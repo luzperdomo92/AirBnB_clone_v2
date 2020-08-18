@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 from fabric.api import run, local
-from datetime import date
+from datetime import datetime
 
 
 def do_pack():
     """packs the content of web_static"""
 
     folder_name = "web_static"
-    today = date.now()
-    today_str = today.strftime("%Y%m%d%l%M%S")
+    now = datetime.now()
+    today_str = now.strftime("%Y%m%d%l%M%S")
     file_name = "%s_%s.tgz" % (folder_name, today_str)
     file_path = "versions/%s" % (file_name)
 
