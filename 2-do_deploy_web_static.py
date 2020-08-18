@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""2-do_deploy_web_static"""
 from fabric.api import local, env, run, put
 from datetime import datetime
 import os
@@ -44,13 +45,13 @@ def do_deploy(archive_path):
         run("tar -xzf /tmp/%s -C /data/web_static/releases/%s/" % (
             file_name, file_name_wo_ext))
         run("rm /tmp/%s" % (file_name))
-        run("mv /data/web_static/releases/%s/web_static/* \
-            /data/web_static/releases/%s/" % (file_name_wo_ext, file_name_wo_ext))
+        run("mv /data/web_static/releases/%s/web_static/* "\
+            "/data/web_static/releases/%s/" % (file_name_wo_ext, file_name_wo_ext))
         run("rm -rf /data/web_static/releases/%s/web_static" % (
             file_name_wo_ext))
         run("rm -rf /data/web_static/current")
-        run("ln -s /data/web_static/releases/%s/ \
-                /data/web_static/current" % (file_name_wo_ext))
+        run("ln -s /data/web_static/releases/%s/ "\
+            "/data/web_static/current" % (file_name_wo_ext))
         return True
     except:
         return False
