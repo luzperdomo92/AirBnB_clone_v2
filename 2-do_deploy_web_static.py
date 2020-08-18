@@ -24,13 +24,13 @@ def do_deploy(archive_path):
 
     try:
         put(archive_path, '/tmp')
-        run("mkdir -p {}/".format(release_path))
-        run("tar -xzf /tmp/{} -C {}/".format(file_name, release_path))
-        run("rm /tmp/{}".format(file_name))
-        run("mv {}/web_static/* {}/".format(release_path, release_path))
-        run("rm -rf {}/web_static".format(release_path))
-        run("rm -rf /data/web_static/current")
-        run("ln -s {}/ /data/web_static/current".format(release_path))
+        run("sudo mkdir -p {}/".format(release_path))
+        run("sudo tar -xzf /tmp/{} -C {}/".format(file_name, release_path))
+        run("sudo rm /tmp/{}".format(file_name))
+        run("sudo mv {}/web_static/* {}/".format(release_path, release_path))
+        run("sudo rm -rf {}/web_static".format(release_path))
+        run("sudo rm -rf /data/web_static/current")
+        run("sudo ln -s {}/ /data/web_static/current".format(release_path))
         return True
     except:
         return False
