@@ -12,11 +12,11 @@ env.hosts = [
 
 def deploy():
     """ do_pack and then do_deploy with file created"""
-    name = do_pack()
-    if not name:
+    path = do_pack()
+    if not path:
         return False
 
-    return do_deploy("versions/{}".format(name))
+    return do_deploy(path)
 
 
 def do_pack():
@@ -30,7 +30,7 @@ def do_pack():
     try:
         local("mkdir -p versions")
         local("tar -cvzf %s %s" % (file_path, folder_name))
-        return file_name
+        return file_path
     except:
         return None
 
