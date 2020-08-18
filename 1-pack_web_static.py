@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from fabric.api import run, local
+from fabric.api import local
 from datetime import datetime
 
 
@@ -8,7 +8,7 @@ def do_pack():
 
     folder_name = "web_static"
     now = datetime.now()
-    today_str = now.strftime("%Y%m%d%l%M%S")
+    today_str = now.strftime("%Y%m%d%H%M%S")
     file_name = "%s_%s.tgz" % (folder_name, today_str)
     file_path = "versions/%s" % (file_name)
 
