@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from fabric.api import local, env, run
+from fabric.api import local, env, run, put
 from datetime import datetime
 import os
 
@@ -49,7 +49,7 @@ def do_deploy(archive_path):
         file_name, file_name_wo_ext))
     if rs.failed:
         return False
-    
+
     rs = run("rm /tmp/%s".format(file_name))
     if rs.failed:
         return False
