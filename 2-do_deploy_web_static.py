@@ -38,36 +38,19 @@ def do_deploy(archive_path):
     # web_static_20170315003959
     file_name_wo_ext = os.path.splitext(file_name)[0]
 
-    rs = put(archive_path, '/tmp/%s' % (file_name))
-    if rs.failed:
+    try:
+        put(archive_path, '/tmp/%s' % (file_name))
+        run("mkdir -p /data/web_static/releases/%s" % (file_name_wo_ext))
+        run("tar -xzf /tmp/%s -C /data/web_static/releases/%s/" % (
+            file_name, file_name_wo_ext))
+        run("rm /tmp/%s" % (file_name))
+        run("mv /data/web_static/releases/%s/web_static/* \
+            /data/web_static/releases/%s/" % (file_name_wo_ext, file_name_wo_ext))
+        run("rm -rf /data/web_static/releases/%s/web_static" % (
+            file_name_wo_ext))
+        run("rm -rf /data/web_static/current")
+        run("ln -s /data/web_static/releases/%s/ \
+                /data/web_static/current" % (file_name_wo_ext))
+        return True
+    except:
         return False
-    rs = run("mkdir -p /data/web_static/releases/%s" % (file_name_wo_ext))
-    if rs.failed:
-        return False
-
-    rs = run("tar -xzf /tmp/%s -C /data/web_static/releases/%s/" % (
-        file_name, file_name_wo_ext))
-    if rs.failed:
-        return False
-
-    rs = run("rm /tmp/%s" % (file_name))
-    if rs.failed:
-        return False
-    rs = run("mv /data/web_static/releases/%s/web_static/* \
-        /data/web_static/releases/%s/" % (file_name_wo_ext, file_name_wo_ext))
-    if rs.failed:
-        return False
-    rs = run("rm -rf /data/web_static/releases/%s/web_static" % (
-        file_name_wo_ext))
-    if rs.failed:
-        return False
-
-    rs = run("rm -rf /data/web_static/current")
-    if rs.failed:
-        return False
-    rs = run("ln -s /data/web_static/releases/%s/ \
-             /data/web_static/current" % (file_name_wo_ext))
-    if rs.failed:
-        return False
-
-    return True
