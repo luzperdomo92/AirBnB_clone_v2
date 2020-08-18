@@ -9,6 +9,7 @@ env.hosts = [
     '3.87.74.240'
 ]
 
+
 def do_deploy(archive_path):
     """ Do Deploy """
     # check the file if exits
@@ -19,7 +20,7 @@ def do_deploy(archive_path):
     file_name = archive_path.split("/")[-1]
     # web_static_20170315003959
     file_name_wo_ext = file_name.split(".")[0]
-    release_path = "/data/web_static/releases/%s" %(file_name_wo_ext)
+    release_path = "/data/web_static/releases/%s" % (file_name_wo_ext)
 
     try:
         put(archive_path, '/tmp/%s' % (file_name))
