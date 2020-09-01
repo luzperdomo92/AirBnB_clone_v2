@@ -12,5 +12,10 @@ def hello_HBTN():
 def HBNB():
 	return "HBNB"
 
+@app.route('/c/<text>')
+def C(text):
+	new_text = text.replace("_", " ")
+	return "C %s" % new_text
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
