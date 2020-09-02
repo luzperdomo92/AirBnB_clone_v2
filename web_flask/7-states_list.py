@@ -6,15 +6,14 @@ from models.state import State
 app = Flask(__name__)
 
 
-@app.teardown_appcontext
-def teardown_storage():
-    storage.close()
-
-
 @app.route('/states_list', strict_slashes=False)
 def list_states():
     states_list = storage.all(State).values()
     return render_template('7-states_list.html', states_list=states_list)
+
+@app.teardown_appcontext
+def teardown_storage(self):
+    storage.close()
 
 
 if __name__ == '__main__':
